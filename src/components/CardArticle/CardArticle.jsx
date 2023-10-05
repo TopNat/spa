@@ -3,14 +3,11 @@ import { Card, Button, Image, Offcanvas, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useListCommentsMutation } from '../../services/apiSPA';
 
-// eslint-disable-next-line react/prop-types
 const CardArticle = ({ props }) => {
-    //console.log(props);
-    // eslint-disable-next-line react/prop-types
     const id = props.id;
-    // eslint-disable-next-line react/prop-types
+
     const title = props.title;
-    // eslint-disable-next-line react/prop-types
+
     const body = props.body;
 
     const [comments, setComments] = useState(false);
@@ -18,16 +15,17 @@ const CardArticle = ({ props }) => {
 
     const navigate = useNavigate();
     //let listComments = [];
-
+    const isEmpty = false;
+    const isLoading = false;
     const showComments = () => {
         console.log(id);
-        /*  getListComments(id).then((data) => {
-            listComments = data.data;
+        getListComments(id).then((data) => {
+            const listComments = data.data;
             console.log(listComments);
-        });*/
+        });
 
-        const { data: listComments, isLoading } = getListComments(id);
-        const isEmpty = !isLoading && !listComments?.length;
+        /*  const { data: listComments, isLoading } = getListComments(id);
+        const isEmpty = !isLoading && !listComments?.length;*/
         setComments(comments ? false : true);
     };
 

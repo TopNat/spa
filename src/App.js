@@ -22,7 +22,7 @@ function App() {
                 <Col md="8">
                     <Routes>
                         <Route path="/" element={<Main />} />
-                        <Route path="/user" element={<User />} />
+                        <Route path="/user/:id" element={<User />} />
                         <Route path="/about" element={<About />} />
                     </Routes>
                 </Col>

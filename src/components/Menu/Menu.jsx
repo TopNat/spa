@@ -9,8 +9,12 @@ const Menu = () => {
     };
 
     return (
-        <Dropdown>
-            <Dropdown.Toggle variant="white" id="dropdown-basic">
+        <Dropdown data-toggle="dropdown">
+            <Dropdown.Toggle
+                variant="white"
+                id="dropdown-basic"
+                className="ddt-split"
+            >
                 <svg
                     enableBackground="new 0 0 91 91"
                     height="35px"

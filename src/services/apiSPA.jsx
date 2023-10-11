@@ -16,25 +16,30 @@ export const apiSPA = createApi({
                 method: 'GET',
             }),
         }),
-        listComments: builder.mutation({
+        listComments: builder.query({
             query: (id) => ({
                 url: `posts/${id}/comments`,
                 method: 'GET',
             }),
         }),
-        /* setMessage: builder.mutation({
-            query: ({ idInstance, apiTokenInstance }) => ({
-                url: `waInstance${idInstance}/receiveNotification/${apiTokenInstance}`,
+        setUserInfo: builder.query({
+            query: (userId) => ({
+                url: `users/${userId}`,
                 method: 'GET',
             }),
         }),
-        delMessage: builder.mutation({
-            query: ({ idInstance, apiTokenInstance, idDel }) => ({
-                url: `waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${idDel}`,
-                method: 'DELETE',
+        listPostsAll: builder.query({
+            query: () => ({
+                url: `/posts`,
+                method: 'GET',
             }),
-        }),*/
+        }),
     }),
 });
 
-export const { useListPostsQuery, useListCommentsMutation } = apiSPA;
+export const {
+    useListPostsQuery,
+    useListCommentsQuery,
+    useSetUserInfoQuery,
+    useListPostsAllQuery,
+} = apiSPA;

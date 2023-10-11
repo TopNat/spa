@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Card, Button, Image, Offcanvas, ListGroup } from 'react-bootstrap';
+import { Card, Button, Image } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useListCommentsMutation } from '../../services/apiSPA';
+//import { useListCommentsMutation } from '../../services/apiSPA';
+import Comments from '../Comments/Comments';
 
 const CardArticle = ({ props }) => {
     const id = props.id;
@@ -10,31 +11,18 @@ const CardArticle = ({ props }) => {
 
     const body = props.body;
 
+    const userId = props.userId;
+
     const [comments, setComments] = useState(false);
-    const [getListComments] = useListCommentsMutation();
 
     const navigate = useNavigate();
-    //let listComments = [];
-    const isEmpty = false;
-    const isLoading = false;
-    const showComments = () => {
-        console.log(id);
-        getListComments(id).then((data) => {
-            const listComments = data.data;
-            console.log(listComments);
-        });
 
-        /*  const { data: listComments, isLoading } = getListComments(id);
-        const isEmpty = !isLoading && !listComments?.length;*/
+    const showComments = () => {
         setComments(comments ? false : true);
     };
 
-    const pageUser = () => {
-        navigate('/user');
-    };
-
-    const handleClose = () => {
-        setComments(false);
+    const pageUser = (id) => {
+        navigate('/user/' + id);
     };
 
     return (
@@ -43,7 +31,7 @@ const CardArticle = ({ props }) => {
                 src="https://koshka.top/uploads/posts/2021-12/1638599322_29-koshka-top-p-kotiki-na-avatarku-32.jpg" //"https://otkritkis.com/wp-content/uploads/2022/06/peukx.jpg"
                 thumbnail
                 width={350}
-                onClick={pageUser}
+                onClick={() => pageUser(userId)}
             />
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
@@ -52,20 +40,12 @@ const CardArticle = ({ props }) => {
                     Comments
                 </Button>
                 {comments && (
-                    <Offcanvas show={comments} onHide={handleClose}>
-                        <Offcanvas.Header closeButton>
-                            <Offcanvas.Title>{title}</Offcanvas.Title>
-                        </Offcanvas.Header>
-                        <Offcanvas.Body>
-                            {isEmpty ? (
-                                <div>No comments...</div>
-                            ) : isLoading ? (
-                                <div>Loading...</div>
-                            ) : (
-                                <ListGroup>comments</ListGroup>
-                            )}
-                        </Offcanvas.Body>
-                    </Offcanvas>
+                    <Comments
+                        title={title}
+                        id={id}
+                        comments={comments}
+                        setComments={setComments}
+                    />
                 )}
             </Card.Body>
         </Card>

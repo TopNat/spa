@@ -1,16 +1,21 @@
 //import { useNavigate } from 'react-router-dom';
-import { useListPostsQuery } from '../../services/apiSPA';
+import {
+    useListPostsQuery /*,
+    useSetUserInfoMutation,*/,
+} from '../../services/apiSPA';
 import { Col, Row, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
 import { clickPage, getListPages } from '../../utils/utils';
 import CardArticle from '../../components/CardArticle/CardArticle';
 
-const COUNT_USERS_PAGE = 2;
+const COUNT_USERS_PAGE = 8;
 
 const Main = () => {
     const [page, setPage] = useState(1);
 
     let countPages = 0;
+    // const [setUserName] = useSetUserInfoMutation();
+    //console.log(setUserName);
 
     const { data: listPosts, isLoading } = useListPostsQuery({
         page: page,
@@ -19,13 +24,28 @@ const Main = () => {
 
     const isEmpty = !isLoading && !listPosts?.length;
 
+    //функция для нахождения ника пользователя по id в списке статей
+    /* const addNameUser = (id) => {
+        setUserName(id).then(
+            (data) => {
+                return data;
+            } //listPosts[index]['nameUser'] = data
+        );
+    };*/
+
+    // console.log(addNameUser);
     if (listPosts?.length) {
+        //let newListPosts = listPosts;
         countPages = Math.ceil(/*listPosts.length*/ 100 / COUNT_USERS_PAGE);
-        /*  listPosts = listPosts.map((item) => {
-            return { ...item, showComments: false };
+
+        /*const listPostsNameUser = newListPosts.map((item) => {
+            setUserName(item.userId).then((data) => {
+                return { ...item, nameUser: data };
+            });
         });*/
+
+        //console.log(listPostsNameUser);
     }
-    //console.log(listPosts);
 
     const listPages = getListPages(countPages, page);
 
@@ -59,6 +79,7 @@ const Main = () => {
                                     id: item.id,
                                     title: item.title,
                                     body: item.body,
+                                    userId: item.userId,
                                 }}
                             />
                         ))
